@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: hsl(208, 100%, 30%);
+}
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: .8rem;
+}
+.main-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.chat-form-container {
+    padding: .8rem;
+}
+#chat-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .8rem;
+}
+#chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    gap: .8rem;
+    padding: .8rem;
+}
+#input-message {
+    flex: 1;
+}
+.message-stretch {
+    align-self: stretch;
+    background-color: rgb(225, 255, 142);
+}
+.message-float-left {
+    align-self: flex-start;
+    background-color: rgb(193, 193, 255);
+}
+.message-float-right {
+    align-self: flex-end;
+    background-color: rgb(106, 250, 101);
+}
+/* Button */
+/* .btn, .form-input, .form-select {
+    padding: .5em;
+    font: inherit;
+    outline: none;
+    color: black;
+    border: 1px solid hsl(240, 100%, 68%);
+    border-radius: 4px;
+    text-decoration: none;
+    background-color: hsl(240, 100%, 88%);
+} */
+
+.form-container {
+    flex: 1;
+    color: white;
+    padding: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#username-form {
+    display: flex;
+    flex-direction: column;
+    background-color: hsl(208, 100%, 35%);
+    padding: 2rem;
+    gap: 1rem;
+    border-radius: 10px;
+    max-width: 50%;
+    box-shadow: 0px 0px 15px 3px hsla(0, 0%, 0%, 0.3);
+}
