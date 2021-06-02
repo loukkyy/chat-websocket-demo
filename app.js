@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
         datetime: format(new Date(), "dd/MM/yyyy hh:mm:ss"),
         clientId: socket.id,
       })
-      callback(true)
+      callback()
     })
   })
 
@@ -61,6 +61,6 @@ io.on("connection", (socket) => {
   })
 })
 
-const PORT = 3000 || process.env.PORT
+const PORT = process.env.PORT || 3000
 
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
