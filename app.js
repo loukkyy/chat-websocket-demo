@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
         message: chatMessage,
         datetime: format(new Date(), "dd/MM/yyyy hh:mm:ss"),
         clientId: socket.id,
+        users: getUsersByRoom(user.room),
       })
       callback(true)
     })

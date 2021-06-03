@@ -30,11 +30,13 @@ socket.on("disconnect", () => {
   console.log(`User ${username} disconnected`)
 })
 
-socket.on("message", ({ username, message, datetime, users }) => {
+socket.on("message", ({ username, message, datetime, clientId, users }) => {
   // update connected user list
   updateConnectedUsers(users)
   // display chat bot message
-  displayMessage({ username, message, datetime }, true, false)
+  const isSender = socket.id === clientId
+  const isBot = username === "ChatBot"
+  displayMessage({ username, message, datetime }, isBot, isSender)
   // scroll down
   $chatMessages.scrollTop = $chatMessages.scrollHeight
 })
@@ -121,7 +123,7 @@ function updateConnectedUsers(users) {
   $count.innerText = users.length
   // set user list
   $userList.innerHTML = ""
-  users.forEach(user => {
+  users.forEach((user) => {
     const $userItem = document.createElement("li")
     $userItem.innerHTML = `<a class="dropdown-item" href="#">${user.username}</a>`
     $userList.append($userItem)
