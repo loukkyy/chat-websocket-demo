@@ -9,18 +9,26 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-color: hsl(208, 100%, 30%);
+    min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
 }
+html {
+    height: -webkit-fill-available;
+    height: fill-available;
+  }
 .nav-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: white;
     padding: .8rem;
+    gap: 5px;
 }
 .main-container {
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 90vh;
 }
 .chat-form-container {
     padding: .8rem;

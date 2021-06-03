@@ -24,13 +24,14 @@ io.on("connection", (socket) => {
     const user = addUser(socket.id, username, room)
 
     socket.join(user.room)
-    callback(`Welcome to the chat room ${room}`)
+    callback(`Welcome to the chat room ${room}`, getUsersByRoom(user.room))
 
     // broadcast when a user connects
     socket.to(user.room).emit("message", {
       username: "ChatBot",
       message: `${user.username} has joined the room`,
       datetime: format(new Date(), "dd/MM/yyyy hh:mm:ss"),
+      users: getUsersByRoom(user.room),
     })
 
     // send chat message to room
@@ -42,7 +43,7 @@ io.on("connection", (socket) => {
         datetime: format(new Date(), "dd/MM/yyyy hh:mm:ss"),
         clientId: socket.id,
       })
-      callback()
+      callback(true)
     })
   })
 
@@ -56,6 +57,7 @@ io.on("connection", (socket) => {
         message: `${user.username} has left the room`,
         datetime: format(new Date(), "dd/MM/yyyy hh:mm:ss"),
         clientId: socket.id,
+        users: getUsersByRoom(user.room),
       })
     }
   })

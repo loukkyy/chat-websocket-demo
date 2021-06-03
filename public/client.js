@@ -14,7 +14,10 @@ socket.emit("joinRoom", { username, room })
 
 socket.on("connect", () => {
   console.log(`Connected to websocket with id: ${socket.id}`)
-  socket.emit("join-room", { username, room }, (message) => {
+  socket.emit("join-room", { username, room }, (message, users) => {
+    // update connected user list
+    updateConnectedUsers(users)
+    // display welcome message
     displayMessage(
       { username: "ChatBot", message, datetime: null },
       true,
@@ -27,15 +30,11 @@ socket.on("disconnect", () => {
   console.log(`User ${username} disconnected`)
 })
 
-socket.on("message", ({ username, message, datetime, clientId }) => {
-  console.log(`Message from ${username}: ${message}`)
-  const isSender = socket.id === clientId
-  const isBot = username === "ChatBot"
-  const messageId = displayMessage(
-    { username, message, datetime },
-    isBot,
-    isSender
-  )
+socket.on("message", ({ username, message, datetime, users }) => {
+  // update connected user list
+  updateConnectedUsers(users)
+  // display chat bot message
+  displayMessage({ username, message, datetime }, true, false)
   // scroll down
   $chatMessages.scrollTop = $chatMessages.scrollHeight
 })
@@ -64,6 +63,7 @@ $chatForm.addEventListener("submit", (e) => {
 
   // emit chat message to server
   socket.emit("send-message", message, (isMessageSent) => {
+    console.log("isSent:", isMessageSent)
     setMessageStatus(isMessageSent, messageId)
   })
 })
@@ -112,6 +112,20 @@ function setMessageStatus(isMessageSent, messageId) {
     $status.classList.toggle("bg-info", !isMessageSent)
     $message.append($status)
   }
+}
+
+function updateConnectedUsers(users) {
+  const $count = document.querySelector("[data-connected-users-count]")
+  const $userList = document.querySelector("[data-connected-users-dropdown]")
+  // update count
+  $count.innerText = users.length
+  // set user list
+  $userList.innerHTML = ""
+  users.forEach(user => {
+    const $userItem = document.createElement("li")
+    $userItem.innerHTML = `<a class="dropdown-item" href="#">${user.username}</a>`
+    $userList.append($userItem)
+  })
 }
 
 document.addEventListener("keydown", (e) => {
